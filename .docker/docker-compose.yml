@@ -1,0 +1,28 @@
+version: "3.9"
+
+services:
+  aplicacao-financeira-api:
+    build:
+      context: ../
+      dockerfile: .docker/Dockerfile.debug
+    container_name: aplicacao-financeira-api
+    ports:
+      - "8000:8000"
+      - "5678:5678"
+    env_file:
+      - ../.env.dev
+    volumes:
+      - ..:/usr/src/application
+    networks:
+      - solfacil
+
+  redis:
+    image: "redis:latest"
+    container_name: redis
+    ports:
+      - 6379:6379
+    networks:
+      - solfacil
+
+networks:
+  solfacil:

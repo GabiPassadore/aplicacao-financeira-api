@@ -1,0 +1,13 @@
+version: 2
+
+updates:
+  - package-ecosystem: "pip"
+    directory: "/"
+    open-pull-requests-limit: 5
+    schedule:
+      interval: "weekly"
+    labels:
+      - "dependabot:patch"
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major", "version-update:semver-minor"]

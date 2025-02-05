@@ -1,0 +1,35 @@
+name: Run Tests and Analyses Code
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: arc-runner-set
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.11.4
+
+      - name: Install poetry
+        run: |
+          curl -sSL https://install.python-poetry.org | python3 -
+          export PATH="${PATH}:${HOME}/.poetry/bin"
+
+      - name: Install dependencies
+        run: |
+          poetry export --without-hashes --with dev --format=requirements.txt > requirements.txt
+          pip install -r requirements.txt
+
+      - name: Run tests
+        run: make test-cov
+
+      - name: Archive code coverage results
+        uses: actions/upload-artifact@v3
+        with:
+          name: code-coverage-report
+          path: coverage.xml
+          retention-days: 1

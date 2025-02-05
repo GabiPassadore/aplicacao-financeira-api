@@ -1,0 +1,42 @@
+on: [issue_comment, pull_request]
+jobs:
+  pr_agent_job:
+    runs-on: arc-runner-set
+    permissions:
+      issues: write
+      pull-requests: write
+      contents: write
+    name: Run pr agent on every pull request, respond to user comments
+    steps:
+      - name: PR Agent action step
+        id: pragent
+        uses: Codium-ai/pr-agent@main
+        env:
+          OPENAI_KEY: ${{ secrets.OPENAI_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  comment_on_pr_to_review:
+    runs-on: arc-runner-set
+    if: github.event_name == 'pull_request' && github.event.action == 'opened'
+    permissions:
+      issues: write
+      pull-requests: write
+      contents: write
+    steps:
+      - name: PR Review
+        uses: actions/github-script@v4
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const { owner, repo } = context.repo;
+            const comment = "/review";
+            const prNumber = context.payload.pull_request ? context.payload.pull_request.number : null;
+
+            if (prNumber !== null) {
+              github.issues.createComment({
+                owner: owner,
+                repo: repo,
+                issue_number: prNumber,
+                body: comment
+              });
+            }
