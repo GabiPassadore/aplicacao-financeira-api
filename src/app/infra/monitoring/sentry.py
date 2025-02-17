@@ -10,8 +10,8 @@ from src.app.environment import settings
 class Sentry:
     def start(self) -> None:
         sentry_sdk.init(
-            dsn=settings.sentry_dsn,
-            environment=settings.sentry_environment,
+            dsn=settings.sentry_settings.sentry_dsn,
+            environment=settings.sentry_settings.sentry_environment,
             integrations=[
                 StarletteIntegration(transaction_style='url'),
                 FastApiIntegration(transaction_style='url'),
