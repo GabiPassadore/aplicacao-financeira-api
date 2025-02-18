@@ -8,7 +8,7 @@ class AppSettings(BaseSettings):
     # App
     project_name: str = Field("aplicacao-financeira-api", env="PROJECT_NAME_API")
     hot_reload: bool = Field(False, env="HOT_RELOAD")
-    hostname: str = Field(None, env="HOSTNAME")
+    hostname: str = Field("aplicacao-financeira-api", env="HOSTNAME")
     
     @property
     def formatted_deployment_name(self) -> str:
