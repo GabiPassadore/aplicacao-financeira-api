@@ -8,8 +8,10 @@ from sqlalchemy.orm.scoping import scoped_session
 
 from src.app.environment import settings
 
+async_engine = create_async_engine(url=settings.database_settings.database_sync_uri)
+
 AsyncSessionLocal = sessionmaker(
-    bind=create_async_engine(url=settings.database_settings.database_sync_uri),
+    bind=async_engine,
     class_=AsyncSession,
     autoflush=False,
     autocommit=False,

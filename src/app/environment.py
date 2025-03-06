@@ -30,10 +30,14 @@ class DatabaseSettings(BaseSettings):
     
     @property
     def database_sync_uri(self):
-        return self._get_database_uri(driver='')
+        return self._get_database_uri()
+    
+    @property
+    def database_async_uri(self):
+        return self._get_database_uri()
 
-    def _get_database_uri(self, driver: str = '+asyncpg') -> str:
-        return f'postgresql{driver}://{self.database_user}:{self.database_password}@{self.database_host}:{self.database_port}/{self.database_name}'  # noqa E501
+    def _get_database_uri(self) -> str:
+        return f'postgresql+asyncpg://{self.database_user}:{self.database_password}@{self.database_host}:{self.database_port}/{self.database_name}'  # noqa E501
 
 
 class Settings(BaseSettings):
