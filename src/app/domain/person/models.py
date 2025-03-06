@@ -8,7 +8,7 @@ class PersonModel(BaseModel):
     __tablename__ = 'persons'
 
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True, index=True)
-    document: Mapped[str] = mapped_column(nullable=False, index=True)
+    document: Mapped[str] = mapped_column(nullable=False, index=True, unique=True)
     first_name: Mapped[str | None] = mapped_column()
     last_name: Mapped[str | None] = mapped_column()
     email: Mapped[str | None] = mapped_column()
