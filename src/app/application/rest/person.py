@@ -1,6 +1,8 @@
 from fastapi import Response, status
 from loguru import logger
 from src.app.application.common.custom_router import CustomAPIRouter
+from src.app.domain.person.schemas import PersonCreateSchema
+
 
 router = CustomAPIRouter(
     prefix='/person',
@@ -8,7 +10,7 @@ router = CustomAPIRouter(
 )
 
 @router.post('/', status_code=status.HTTP_201_CREATED)
-async def create_person() -> Response:
+async def create_person(data: PersonCreateSchema) -> Response:
     logger.info('Person criado')
     return {'status': 'alive'}
 
