@@ -2,7 +2,7 @@ from fastapi import Depends, FastAPI
 from fastapi.middleware import Middleware
 from loguru import logger
 
-from src.app.application.rest import health, metric
+from src.app.application.rest import health, metric, person
 from src.app.environment import settings 
 from src.app.infra.logging.correlation_id import CorrelationIdMiddleware
 from src.app.infra.logging.loguru import configure_logging
@@ -41,5 +41,6 @@ class AppBuilder:
 
         app.include_router(metric.router)
         app.include_router(health.router)
+        app.include_router(person.router)
 
         return app
