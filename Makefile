@@ -36,4 +36,7 @@ run-containers:
 	docker-compose -f .docker/docker-compose.yml up -d
 
 run:
-	poetry run python main.py
+	 poetry run python main.py
+
+run-create:
+	python3 scripts/create_tables.py
