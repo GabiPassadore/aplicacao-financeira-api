@@ -15,7 +15,7 @@ router = CustomAPIRouter(
 @router.post('/', status_code=status.HTTP_201_CREATED)
 async def create_person(
     data:PersonCreateSchema,
-     use_case: CreatePerson = Depends(resolve_create_person_usecase),  # ✅ FastAPI injeta automaticamente
+     use_case: CreatePerson = Depends(resolve_create_person_usecase),  
 ) -> Response:
     return await use_case.execute(data=data)
 
